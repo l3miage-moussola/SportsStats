@@ -3,7 +3,11 @@ export interface Competition {
   name: string;
 }
 export interface CompetitionNews {
-  title: string;
-  publisherName: string;
-  publisherLogo: string;
+  NewsLink: string;
+  Image: string;
+
+  Title: string;
+  PublisherLogo: string;
+  PublisherName: string;
+  PublisherDate: string;
 }

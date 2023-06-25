@@ -35,7 +35,6 @@ class CompeitionsList extends React.Component<
   async componentDidMount() {
     try {
       const competitions = await getCompetitions();
-      console.log("COM¨PETITION",competitions);
       this.setState({competitions: competitions, isLoading: false});
     } catch (error) {
       console.log(error);
