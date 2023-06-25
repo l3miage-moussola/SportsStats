@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import React from 'react';
+import { Text} from "react-native";
 
 function TestComponent() {
     return <Text>THIS COMPONENT WORKS!</Text>;
