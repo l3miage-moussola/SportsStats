@@ -5,7 +5,7 @@ const API_URL = 'https://football98.p.rapidapi.com/competitions';
 
 const options = {
   headers: {
-    'X-RapidAPI-Key': '1f80563569msh488b53b87286862p140552jsna93f95f23db5',
+    'X-RapidAPI-Key': '4784f41077msh67a52812eebfabfp170047jsnd0817ad1ba87',
     'X-RapidAPI-Host': 'football98.p.rapidapi.com',
   },
 };

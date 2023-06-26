@@ -6,16 +6,18 @@ import {
   FlatList,
   StyleSheet,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteStackParamList} from './Competitions';
 import {CompetitionNews} from '../Models/FootballNewsModels';
-import {fetchPremierLeagueNews} from '../services/NewsServices';
+import {fetchNews} from '../services/NewsServices';
 import NewsItem from '../components/NewsItem';
 
 interface CompetitionDetailsState {
   newsList: CompetitionNews[];
+  isLoading: boolean;
 }
 
 class CompetitionDetails extends React.Component<
@@ -50,18 +52,20 @@ class CompetitionDetails extends React.Component<
     super(props);
     this.state = {
       newsList: [] as CompetitionNews[],
+      isLoading: true,
     };
   }
 
   async componentDidMount() {
+    this.setState({isLoading: true});
     const {item} = this.props.route.params;
     this.props.navigation.setOptions({
-      title: 'Top News de la Competition:' + item,
+      title: 'Top News de la Competition:' + item.name,
     });
     try {
-      const news = await fetchPremierLeagueNews();
+      const news = await fetchNews(item.name);
 
-      this.setState({newsList: news});
+      this.setState({newsList: news, isLoading: false});
     } catch (error) {
       console.error(error);
     }
@@ -71,10 +75,6 @@ class CompetitionDetails extends React.Component<
   };
   render() {
     let competitionNews = this.state.newsList;
-    console.log(
-      'NEWSSSS ICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIiiii \n',
-      competitionNews,
-    );
     const renderItem = ({item}: {item: CompetitionNews}) => (
       <NewsItem item={item} onPress={this.isPressedItem} />
     );
@@ -84,15 +84,19 @@ class CompetitionDetails extends React.Component<
       <ImageBackground
         source={require('../assets/cupImage.jpg')}
         style={styles.backgroundImage}>
-        <View>
-          <Text> {title} </Text>
+        {this.state.isLoading ? (
+          <ActivityIndicator style={styles.loader} size="large" color="ffffff"/>
+        ) : (
+          <View>
+            <Text> {title} </Text>
 
-          <FlatList
-            data={competitionNews}
-            renderItem={renderItem}
-            contentContainerStyle={styles.container}
-          />
-        </View>
+            <FlatList
+              data={competitionNews}
+              renderItem={renderItem}
+              contentContainerStyle={styles.container}
+            />
+          </View>
+        )}
       </ImageBackground>
     );
   }
@@ -106,8 +110,13 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover', // Ajuste l'image à la taille de l'écran
-    justifyContent: 'center', // Centrer verticalement le contenu
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

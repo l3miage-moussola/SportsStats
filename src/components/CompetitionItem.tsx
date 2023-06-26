@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black',
   },
   icon: {
     width: 48,

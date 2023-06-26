@@ -8,9 +8,11 @@ function NewsItem(props: {
 }) {
   let {item, onPress} = props;
   return (
-    <TouchableOpacity onPress={() => onPress(item)}>
-      <View style={styles.iconContainer}>
-        <Image source={{uri: item.PublisherLogo}} style={styles.icon} />
+    <TouchableOpacity
+      onPress={() => onPress(item)}
+      style={styles.cardContainer}>
+      <View style={styles.imageViewContainer}>
+        <Image source={{uri: item.PublisherLogo}} style={styles.image} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.Title}</Text>
@@ -30,10 +32,10 @@ const styles = StyleSheet.create({
     padding: 12,
     elevation: 4,
   },
-  iconContainer: {
+  imageViewContainer: {
     marginRight: 12,
   },
-  icon: {
+  image: {
     width: 40,
     height: 40,
     borderRadius: 20,
